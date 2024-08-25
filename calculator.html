@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>calculator</title>
+    <style>
+      body {
+        width: 98%;
+        height: 90vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .container {
+        width: 330px;
+        height: 450px;
+        background-color: rgb(30, 29, 29);
+        padding: 10px 20px 20px 20px;
+        border-radius: 15px;
+      }
+
+      #display {
+        display: block;
+        width: 310px;
+        height: 65px;
+        margin-inline: 10px;
+        text-align: right;
+        font-size: 4rem;
+        background-color: snow;
+        border-radius: 5px;
+        overflow-x: scroll;
+        scrollbar-width: none;
+      }
+
+      .btn-grp {
+        margin: 13px;
+      }
+
+      .btn-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+      }
+
+      .btn {
+        height: 55px;
+        width: 70px;
+        border-radius: 10px;
+        border: 1px solid black;
+        background-color: #bcbaba;
+        box-shadow: 0.5px 2px #424242;
+        font-size: 2rem;
+      }
+
+      .btn:active {
+        background-color: rgb(130, 130, 130);
+        transform: translateY(2px);
+      }
+
+      .clr {
+        background-color: rgb(139, 241, 241);
+      }
+
+      .clr:active {
+        background-color: rgb(49, 241, 241);
+      }
+
+      .operator,
+      .operator:disabled {
+        background-color: rgb(148, 148, 148);
+        color: #000;
+      }
+
+      .eql,
+      .eql:disabled {
+        background-color: #f4f3f3;
+      }
+
+      .eql:active {
+        background-color: #d8d8d8;
+      }
+
+      h3 {
+        margin-top: 5px;
+        color: white;
+        display: flex;
+        justify-content: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- <h3>casio</h3> -->
+      <h1 id="display">0</h1>
+      <div class="btn-grp">
+        <div class="btn-row">
+          <button class="digits btn" onclick="addDigit('7')">7</button>
+          <button class="digits btn" onclick="addDigit('8')">8</button>
+          <button class="digits btn" onclick="addDigit('9')">9</button>
+          <button class="operator btn" onclick="addOperator('+')">+</button>
+        </div>
+        <div class="btn-row">
+          <button class="digits btn" onclick="addDigit('4')">4</button>
+          <button class="digits btn" onclick="addDigit('5')">5</button>
+          <button class="digits btn" onclick="addDigit('6')">6</button>
+          <button class="operator btn" onclick="addOperator('-')">-</button>
+        </div>
+        <div class="btn-row">
+          <button class="digits btn" onclick="addDigit('1')">1</button>
+          <button class="digits btn" onclick="addDigit('2')">2</button>
+          <button class="digits btn" onclick="addDigit('3')">3</button>
+          <button class="operator btn" onclick="addOperator('x')">x</button>
+        </div>
+        <div class="btn-row">
+          <button class="btn clr" onclick="clr()">c</button>
+          <button class="digits btn" onclick="addDigit('0')">0</button>
+          <button class="operator btn eql" onclick="calculate()">=</button>
+          <button class="operator btn" onclick="addOperator('/')">/</button>
+        </div>
+      </div>
+    </div>
+    <!-- <button onclick="backSapce()">g</button> -->
+    <script>
+      const display = document.getElementById("display");
+      const operator = document.getElementsByClassName("operator");
+      function isDisabled(v) {
+        // for (let i = 0; i < operator.length; i++) {
+        //     operator[i].disabled=v
+        // }
+        const arr = Array.from(operator); //getting HTMLcollection as object not an array so covert it into array
+        console.log(arr);
+        arr.map((i) => (i.disabled = v));
+      }
+      function addDigit(i) {
+        display.innerText === "0"
+          ? (display.innerText = i)
+          : (display.innerText += i);
+        isDisabled(false);
+      }
+      function addOperator(i) {
+        display.innerText += i;
+        isDisabled(true);
+      }
+      function calculate() {
+        display.innerText = display.innerText.replace("x", "*");
+        console.log(display.innerText);
+        display.innerText = eval(display.innerText);
+      }
+      function clr() {
+        display.innerText = "0";
+        isDisabled(false);
+      }
+      function backSapce() {
+        display.innerText = display.innerText.slice(0, -1);
+      }
+    </script>
+  </body>
+</html>
